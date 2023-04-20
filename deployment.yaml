@@ -1,0 +1,65 @@
+apiVersion: apps/v1  
+
+kind: Deployment   #kubernetes resource kind is created here 
+
+metadata:  
+
+  name: hello-deployment 
+
+spec: 
+
+  replicas: 2   # no of replicas will be created for this deployment 
+
+  selector: 
+
+    matchLabels: 
+
+      app: hello 
+
+  template: 
+
+    metadata: 
+
+      labels: 
+
+        app: hello 
+
+    spec: 
+
+      containers: 
+
+        - name: hello 
+
+          image: donthusaikrishna/kubernetes:krishna  #Image i.e used in cluster 
+
+          imagePullPolicy: Always 
+
+          ports: 
+
+            - containerPort: 8082 
+---
+apiVersion: v1 
+
+kind: Service 
+
+metadata: 
+
+  name: hello-service 
+
+spec: 
+
+  selector: 
+
+    app: hello
+
+  ports: 
+
+    - protocol: "TCP" 
+
+      port: 8082 
+
+      targetPort: 8083 #[provide the port number the deployment should be exposed to ]
+
+ 
+
+  type: NodePort
